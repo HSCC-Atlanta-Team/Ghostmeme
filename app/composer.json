@@ -1,0 +1,8 @@
+{
+    "name": "hscc-atlanta/ghostmeme",
+    "description": "Ghostmeme app for 2021",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^5.3"
+    }
+}

@@ -76,11 +76,18 @@
         <div  class="form-row justify-content-center">
         <div class="form-group col-md-4">
     <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" name="password" placeholder="Please Enter Your Password">
+    <input type="password" minlength="10"  class="form-control" id="password" name="password" placeholder="Please Enter Your Password">
 </div>
 <div class="form-group col-md-4">
     <label for="password">Confirm Password</label>
     <input type="password" class="form-control" id="password2" name="password2" placeholder="Please Confirm Your Password">
+</div>
+</div>
+<div  class="form-row justify-content-center">
+<div class="form-group col-md-4">
+<input type="file"
+       id="propic" name="propic"
+       accept="image/png, image/jpeg">
 </div>
 </div>
 <div class='form-row justify-content-center '>

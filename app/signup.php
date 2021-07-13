@@ -1,6 +1,5 @@
 <?php require 'init.php';?>
 <?php $page_title = 'Sign Up' ?>
-<?php include_once $_ENV['BASE_DIRECTORY'] . '/web-assets/app_nav/header.php'; ?>
 <?php
     use App\Database\User;
 

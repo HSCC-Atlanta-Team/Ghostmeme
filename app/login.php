@@ -1,6 +1,5 @@
 <?php require 'init.php';?>
 <?php $page_title = 'Login' ?>
-<?php include_once $_ENV['BASE_DIRECTORY'] . '/web-assets/app_nav/header.php'; ?>
 <?php
 
     if(isset($_SESSION['user']) || isset($_COOKIE['user'])){

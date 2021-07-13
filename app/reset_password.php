@@ -1,6 +1,5 @@
 <?php require 'init.php';?>
 <?php $page_title = 'Reset Password' ?>
-<?php include_once $_ENV['BASE_DIRECTORY'] . '/web-assets/app_nav/header.php'; ?>
 <?php
     use App\Database\User;
     $user = new User();

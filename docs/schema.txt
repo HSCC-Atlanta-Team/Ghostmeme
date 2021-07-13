@@ -1,0 +1,17 @@
+create database ghostmeme;
+
+use ghostmeme;
+
+create table users (
+    id int(11) not null AUTO_INCREMENT,
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
+    phone varchar(32),
+    email varchar(255) not null,
+    password_hash varchar(255) not null,
+    username varchar(255) not null,
+    forgot varchar(20),
+    forgot_pass bool,
+    profile_pic_path varchar(255) not null,
+    PRIMARY KEY (id)
+);

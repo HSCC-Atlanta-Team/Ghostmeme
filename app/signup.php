@@ -31,7 +31,10 @@
                 $error='Password And Confirm Password Do Not Match';
             }
             elseif($_POST['username'] == NULL){
-                $error='Pleaase Enter Your Username';
+                $error='Please Enter Your Username';
+            }
+            elseif(!ctype_alpha($_POST['username'])){
+                $error ='Please Make Sure Your Username Doesnt Have Any Numbers Or Special Charecters';
             }
             elseif($_POST['propic'] == NULL){
                 $error = 'Please Select A Profile Picture';

@@ -1,6 +1,10 @@
 <?php
     namespace App\Database;
 
+    require __DIR__ . '/../../init.php';
+
+    use GuzzleHttp\Client;
+    use GuzzleHttp\Psr7\Request;
     use PDO;
 
         class User extends Database {
@@ -43,15 +47,47 @@
                 }
             }
 
-            public function signup($first_name, $last_name, $phone, $email, $password_hash, $username){
-                $this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+            public function signup($first_name, $last_name, $phone, $email, $password_hash, $username, $imageBase64){
 
-                $signup_query = $this->db->prepare('INSERT INTO `users` (first_name, last_name, phone, email, password_hash, username, forgot) VALUES (:first_name, :last_name, :phone, :email, :password_hash, :username, :forgot)');
-                $code = $this->generateForgotPassCode();
+                //die(var_dump($phone));
+                $client = new Client(['base_uri' => $_ENV['API_BASE_URL'], 'http_errors' => false]);
 
-                $signup_query->execute([':first_name' => $first_name, ':last_name' => $last_name, ':phone' => $phone, ':email' => $email, ':password_hash' => $password_hash, ':username' => $username, ':forgot' => $code]);
+                $name = sprintf(
+                '%s %s',
+                $first_name,
+                $last_name);
+            
+                $body = json_encode([
+                    'name' => $name,
+                    'email' => $email,
+                    'phone' => $phone,
+                    'username' => $username,
+                    'imageBase64' => $imageBase64,
+                ]);
+            
+                $response = $client->post('/v1/users', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
+
+                $status = $response->getStatusCode();
+                // /die(var_dump($status));
+                if($status == 200){
+
+                    //die(var_dump(json_decode($response->getBody(), true)));
+                    //die(var_dump($signup_query->errorInfo()));
+
+                    $this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+
+                    $signup_query = $this->db->prepare('INSERT INTO `users` (first_name, last_name, phone, email, password_hash, username, forgot) VALUES (:first_name, :last_name, :phone, :email, :password_hash, :username, :forgot)');
+                    $code = $this->generateForgotPassCode();
+                    $signup_query->execute([':first_name' => $first_name, ':last_name' => $last_name, ':phone' => $phone, ':email' => $email, ':password_hash' => $password_hash, ':username' => $username, ':forgot' => $code]);
+                    return NULL;
+                } elseif($status == 400){
+                    $error =  json_decode($response->getBody(), true);
+                    return $error['error'];
+                } elseif($status == 555){
+                    return 'Something is Wrong With The Server At This Moment. Please Try Again After A Few Minutes';
+                }
+
                 
-                //die(var_dump($signup_query->errorInfo()));
 
 
             }

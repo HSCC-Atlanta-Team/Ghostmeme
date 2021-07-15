@@ -62,7 +62,7 @@
                 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
                 $user->resetPassword($_GET['code'], $password);
                 $positive = 'Your Password Was Resetted';
-                header('location: login.php');
+                header('location: login.php?reset=confirmed');
             }
         }
     }

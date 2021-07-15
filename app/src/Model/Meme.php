@@ -120,7 +120,11 @@ use GuzzleHttp\Psr7\Request;
                 "imageBase64" => NULL,
             ]);
 
-            $response = $client->post('/v1/memes', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
+            try{
+                $response = $client->post('/v1/memes', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
+            } catch(Exception $e){
+                echo $e->getMessage();
+            }
             
             return json_decode($response->getBody(), true);
 

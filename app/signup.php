@@ -31,7 +31,13 @@
                 $error='Password And Confirm Password Do Not Match';
             }
             elseif($_POST['username'] == NULL){
-                $error='Pleaase Enter Your Username';
+                $error='Please Enter Your Username';
+            }
+            elseif(!ctype_alpha($_POST['username'])){
+                $error ='Please Make Sure Your Username Doesnt Have Any Numbers Or Special Charecters';
+            }
+            elseif($_POST['propic'] == NULL){
+                $error = 'Please Select A Profile Picture';
             }
             elseif(strpos($_POST['username'], '@')){
                 $error = 'Username Cannot Contain An @. Please Enter Another Username';
@@ -46,8 +52,20 @@
                 $error='This Username Already Exists. Please Choose A Different Username';
             }
             else{
-                $user->signup($_POST['first_name'], $_POST['last_name'], $_POST['phone'] ?? null, $_POST['email'], $password, $_POST['username']);
+                $numbers = explode("\n", $_POST['phone']);
 
+
+                foreach($numbers as $number)
+                {
+                    $data = preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', '$1-$2-$3', $number). "\n";
+                }
+                $phone = substr($data, 0, -1);
+                $error_report = $user->signup($_POST['first_name'], $_POST['last_name'], $phone, $_POST['email'], $password, $_POST['username'],base64_encode($_POST['propic']));
+                if($error_report){
+                    $error = $error_report;
+                } else{
+                    header('location: login.php?signup=confirmed');
+                }
             }
         }
 ?>
@@ -85,7 +103,7 @@
 <div class="form-row justify-content-center">
         <div class="form-group col-md-4">
     <label for="phone">Phone Number</label>
-    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Optional" value="<?=$_POST['phone']?>">
+    <input type="text" pattern="[0-9]{10}" oninvalid="setCustomValidity('Please Enter A Valid Phone Number (10 Digits No Hyphen)')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" id="phone" name="phone" placeholder="123-456-7890 *Optional " value="<?=$_POST['phone']?>">
 </div>
 <div class="form-group col-md-4">
         <label for="">Email</label>

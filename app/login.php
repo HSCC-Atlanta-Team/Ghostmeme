@@ -9,6 +9,13 @@
     use App\Database\User;
     $user = new User();
 
+    if(isset($_GET['signup'])){
+        $positive='Signup Confirmed. Please Log In.';
+    }
+    if(isset($_GET['reset'])){
+        $positive='Your Password Was Changed. Please Log In.';
+    }
+
     if(isset($_POST['submit'])){
         if($_POST['email'] == NULL){
             $error='Please Enter Your Email';
@@ -32,6 +39,9 @@
              <?php
 if ($error) {
     echo '<div class="alert alert-danger">' . $error . '</div>';
+}
+if ($positive) {
+    echo '<div class="alert alert-success">' . $positive . '</div>';
 }
 ?>
        <form action="login.php" method="post">

@@ -3,20 +3,19 @@ namespace App\Model;
 
 require __DIR__ . '/../../init.php';
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
+    use GuzzleHttp\Client;
+    use GuzzleHttp\Psr7\Request;
 
 
-
-    class Meme {
+    class Meme{
         private $id; //A unique immutable MongoDB ID representing this meme. **Generated automatically by the server**
         private $owner; //The user_id of the user that uploaded this meme.
         private $reciever; //The user_id of a non-owner user authorized to access this meme or null
         private $createdAt; //When this meme was created in milliseconds since the unix epoch.
-        private $expiredAt; //When When this meme expired (or will expire) in milliseconds since the unix epoch or -1 if it should never expire.
+        private $expiredAt = -1; //When When this meme expired (or will expire) in milliseconds since the unix epoch or -1 if it should never expire.
         private $description; //Additional data associated with this meme or null.
         private $likes; //The current number of likes this meme has received.
-        private $private; //true if this meme is private or false otherwise.
+        private $private = false; //true if this meme is private or false otherwise.
         private $replyTo; //The meme_id of the meme to which this meme is responding or null if it is not a reply.
         private $imageUrl; //The HTTP url of a PNG, JPEG, or GIF image file or null if there is no image.
 
@@ -108,7 +107,7 @@ use GuzzleHttp\Psr7\Request;
 
 
         public function createMeme(){
-            $client = new Client(['base_uri' => $_ENV['API_BASE_URL']]);
+            $client = new Client(['base_uri' => $_ENV['API_BASE_URL'], 'http_errors' => false]);
             $body = json_encode([
                 "owner" => $this->owner,
                 "reciever" => $this->reciever,
@@ -120,13 +119,17 @@ use GuzzleHttp\Psr7\Request;
                 "imageBase64" => NULL,
             ]);
 
-            try{
-                $response = $client->post('/v1/memes', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
-            } catch(Exception $e){
-                echo $e->getMessage();
-            }
             
-            return json_decode($response->getBody(), true);
+            $response = $client->post('/v1/memes', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
+            $status = $response->getStatusCode();
+            $body = json_decode($response->getBody(), true);
+            if($status == 200){
+                return $true;
+            } elseif($status == 400){
+                return $body;
+            } elseif($status=555){
+                return 'server';
+            }
 
         }
 

@@ -62,7 +62,7 @@ if($allMemes){
     if($value['owner'] == $_GET['user'] && $value['receiver'] == $_SESSION['user']['owner_id']){
                 echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%">
             <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="' .$value['imageUrl'] .'" alt="Image Failed To Load">
+        <img class="card-img-top" src="' .$value['imageUrl'] .'" >
         <div class="card-body" style="background-color: #43CC47">
             <p class="card-text">' . $value['description'].'</p>
         </div>
@@ -72,7 +72,7 @@ if($allMemes){
     if($value['receiver'] == $_GET['user'] && $value['owner'] == $_SESSION['user']['owner_id']){
         echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
             <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="' .$value['imageUrl'] .'" alt="Image Failed To Load">
+        <img class="card-img-top" src="' .$value['imageUrl'] .'" >
         <div class="card-body" style="background-color: #1982FC">
             <p class="card-text">' . $value['description'].'</p>
         </div>

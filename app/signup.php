@@ -33,6 +33,9 @@
             elseif($_POST['username'] == NULL){
                 $error='Please Enter Your Username';
             }
+            elseif(strlen($_POST['username'])>11){
+                $error = 'Make Sure Your Username is Less Than or Equal To 11 Characters Long.';
+            }
             elseif(!ctype_alpha($_POST['username'])){
                 $error ='Please Make Sure Your Username Doesnt Have Any Numbers Or Special Charecters';
             }
@@ -86,7 +89,7 @@
 <div class="form-row justify-content-center">
         <div class="form-group col-md-8">
     <label for="username">Username</label>
-    <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="<?=$_POST['username']?>">
+    <input type="text" maxlength = '11' class="form-control" id="username" name="username" placeholder="Username" value="<?=$_POST['username']?>">
 </div>
 </div>
 <div class="form-row justify-content-center">

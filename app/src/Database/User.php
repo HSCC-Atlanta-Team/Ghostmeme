@@ -20,25 +20,32 @@
                 if(password_verify($password, $user['password_hash'])){
                     if($remember){
                         setcookie('user',[
+                            'id' => $user['id'],
                             'first_name' => $user['first_name'],
                             'last_name' => $user['last_name'],
                             'phone' => $user['phone'],
-                            'email' => $user['email']], time()+(10 * 365 * 24 * 60 * 60));
+                            'email' => $user['email'], 
+                            'owner_id' => $user['owner_id']],
+                            time()+(10 * 365 * 24 * 60 * 60));
 
                         $_SESSION['user'] = [
+                            'id' => $user['id'],
                             'first_name' => $user['first_name'],
                             'last_name' => $user['last_name'],
                             'phone' => $user['phone'],
                             'email' => $user['email'],
+                            'owner_id' => $user['owner_id'],
                         ];
                         return true;
                     }
                     if(!$remember){
                         $_SESSION['user'] = [
+                            
                             'first_name' => $user['first_name'],
                             'last_name' => $user['last_name'],
                             'phone' => $user['phone'],
                             'email' => $user['email'],
+                            'owner_id' => $user['owner_id'],
                         ];
                         return true;
                     }  
@@ -68,6 +75,7 @@
                 $response = $client->post('/v1/users', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
 
                 $status = $response->getStatusCode();
+                $user_from_api = json_decode($response->getBody(), true);
                 // /die(var_dump($status));
                 if($status == 200){
 
@@ -76,9 +84,9 @@
 
                     $this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
-                    $signup_query = $this->db->prepare('INSERT INTO `users` (first_name, last_name, phone, email, password_hash, username, forgot) VALUES (:first_name, :last_name, :phone, :email, :password_hash, :username, :forgot)');
+                    $signup_query = $this->db->prepare('INSERT INTO `users` (first_name, last_name, phone, email, password_hash, username, forgot, owner_id) VALUES (:first_name, :last_name, :phone, :email, :password_hash, :username, :forgot, :owner_id)');
                     $code = $this->generateForgotPassCode();
-                    $signup_query->execute([':first_name' => $first_name, ':last_name' => $last_name, ':phone' => $phone, ':email' => $email, ':password_hash' => $password_hash, ':username' => $username, ':forgot' => $code]);
+                    $signup_query->execute([':first_name' => $first_name, ':last_name' => $last_name, ':phone' => $phone, ':email' => $email, ':password_hash' => $password_hash, ':username' => $username, ':forgot' => $code, 'owner_id' => $user_from_api['user']['user_id']]);
                     return NULL;
                 } elseif($status == 400){
                     $error =  json_decode($response->getBody(), true);
@@ -214,6 +222,27 @@
 
                 $change_forgot_query = $this->db->prepare('UPDATE users set forgot = :forgot where forgot = :forgot_code');
                 $change_forgot_query->execute([':forgot' => $forgot, ':forgot_code' => $code]);
+            }
+
+            public function getUserWithUsername($username){
+                $client = new Client(['base_uri' => $_ENV['API_BASE_URL'], 'http_errors' => false]);
+
+                $response = $client->get('/v1/users/' . $username, ['headers' => ['key' => $_ENV['API_KEY']]] );
+
+                $status = $response->getStatusCode();
+
+                if($status == 200){
+                    $user = json_decode($response->getBody(), true);
+                    return $user;
+                }
+                if($status == 400){
+                    return false;
+                }
+                if($status == 555){
+                    return 'server';
+                }
+
+
             }
         }
 ?>

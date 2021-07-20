@@ -48,7 +48,7 @@ if ($positive) {
             <div class="row justify-content-center"> <!-- Start Row -->
                 <div class="w-100"></div>
                  <div class="w-100"></div>
-                 <div class="col-md-4 justify-content-centerr">
+                 <div class="col-md-4 justify-content-center">
                      <label for="email">Email or Username</label>
                      <input type="text" class="form-control" id="email" name="email" value="<?=$_POST['email']?>">
                  </div>

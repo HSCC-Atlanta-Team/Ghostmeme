@@ -39,6 +39,8 @@
                 $error = 'Something Went Wrong. Please Try Again Later';
             }
         }
+    } else{
+        header('Location: ' . $_ENV['BASE_URL']);
     }
     ?>
 
@@ -60,8 +62,9 @@ if($allMemes){
     // </div>';
     // }
     if($value['owner'] == $_GET['user'] && $value['receiver'] == $_SESSION['user']['owner_id']){
-                echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%">
-            <div class="card" style="width: 18rem;">
+                echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" oncontextmenu="return false;">
+            <div class = "" style="width: 18rem;vertical-align:text-bottom;">
+            <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' .$user_info['user']['username'] .' </p>
         <img class="card-img-top" src="' .$value['imageUrl'] .'" >
         <div class="card-body" style="background-color: #43CC47">
             <p class="card-text">' . $value['description'].'</p>
@@ -70,18 +73,37 @@ if($allMemes){
         </div>';
     }
     if($value['receiver'] == $_GET['user'] && $value['owner'] == $_SESSION['user']['owner_id']){
-        echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
-            <div class="card" style="width: 18rem;">
+        echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%" oncontextmenu="return false;">
+            <div style="width: 18rem;">
+            <p style="padding-right: 1.5%;"> ' .$_SESSION['user']['username'] .' </p>
         <img class="card-img-top" src="' .$value['imageUrl'] .'" >
         <div class="card-body" style="background-color: #1982FC">
             <p class="card-text">' . $value['description'].'</p>
         </div>
         </div>
-        </div>';
+        </div>
+        ';
     }
+
     
 }
 }
+$get = $_GET['user'];
+//die(var_dump($_ENV['BASE_URL'] . '/users.php?' . $get));
 ?>
-
+<form method = "POST" action="<?=$_ENV['BASE_URL'] . '/users.php?user=' . $get?>">
+    <div class="form-row justify-content-center">
+        <div class="form-column col-md-4">
+            <input type="url">
+        </div>
+    </div>
+    <div class="form-row justify-content-center ">
+        <div class="form-column col-md-4">
+            <input type="text">
+            <button type="submit" class="btn btn-primary"> Submit </button>
+        </div>
+    </div>
+        
+   
+</form>
 <a name="bottomOfPage"></a>

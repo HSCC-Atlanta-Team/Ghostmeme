@@ -1,6 +1,9 @@
 <?php
 require 'init.php';
 
-$template = $twig->load('test.tpl');
-echo $template->render(['title' => 'Twig Template']);
+$pageVariables = [
+    'title' => 'Twig Templates',
+];
+
+echo $twig->render('test.twig', $pageVariables);
 ?>

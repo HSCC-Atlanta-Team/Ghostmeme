@@ -62,7 +62,18 @@ if($allMemes){
     // </div>';
     // }
     if($value['owner'] == $_GET['user'] && $value['receiver'] == $_SESSION['user']['owner_id']){
-                echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" oncontextmenu="return false;">
+        if(0 <= $value['expiredAt']  && $value['expiredAt'] < time()){
+                
+        echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
+            <div class = "" style="width: 18rem;vertical-align:text-bottom;">
+            <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' .$user_info['user']['username'] .' </p>
+        <div class="card-body" style="background-color: #b5b5b5">
+            <p> Deleted Message</p>
+        </div>
+        </div>
+        </div>';
+        } else{
+            echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
             <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' .$user_info['user']['username'] .' </p>
         <img class="card-img-top" src="' .$value['imageUrl'] .'" >
@@ -71,9 +82,21 @@ if($allMemes){
         </div>
         </div>
         </div>';
+            
+        }
     }
     if($value['receiver'] == $_GET['user'] && $value['owner'] == $_SESSION['user']['owner_id']){
-        echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%" oncontextmenu="return false;">
+        if( 0 <= $value['expiredAt']  && $value['expiredAt'] < time()){
+        echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%" >
+            <div class = "" style="width: 18rem;vertical-align:text-bottom;">
+            <p style="padding-left: 1.5%;padding-top: 1.5%;"> ' .$user_info['user']['username'] .' </p>
+        <div class="card-body" style="background-color: #b5b5b5">
+            <p> Deleted Message </p>
+        </div>
+        </div>
+        </div>';
+        } else {
+            echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
             <div style="width: 18rem;">
             <p style="padding-right: 1.5%;"> ' .$_SESSION['user']['username'] .' </p>
         <img class="card-img-top" src="' .$value['imageUrl'] .'" >
@@ -83,6 +106,7 @@ if($allMemes){
         </div>
         </div>
         ';
+        }
     }
 
     
@@ -90,20 +114,41 @@ if($allMemes){
 }
 $get = $_GET['user'];
 //die(var_dump($_ENV['BASE_URL'] . '/users.php?' . $get));
+
+if($allMemes){
+echo '<div class="form-row justify-content-center">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Message
+</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Ghostmeme</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+            <div class="form-row p-1" >
+            <input type="url" name="image" placeholder="Image URL">
+            </div>
+            <div class="form-row p-1">
+            <input type="text" name="test" placeholder="Description">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+        <form>
+      </div>
+    </div>
+  </div>
+</div>';
+}
 ?>
-<form method = "POST" action="<?=$_ENV['BASE_URL'] . '/users.php?user=' . $get?>">
-    <div class="form-row justify-content-center">
-        <div class="form-column col-md-4">
-            <input type="url">
-        </div>
-    </div>
-    <div class="form-row justify-content-center ">
-        <div class="form-column col-md-4">
-            <input type="text">
-            <button type="submit" class="btn btn-primary"> Submit </button>
-        </div>
-    </div>
-        
-   
-</form>
 <a name="bottomOfPage"></a>

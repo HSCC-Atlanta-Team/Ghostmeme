@@ -1,0 +1,34 @@
+{% extends "layouts/basic.layout.twig" %}
+
+{% block title %}A User{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h2>One User</h2>
+<div class="user">
+    <img class="user-profile-img" src="{{ first_user.imgUrl}}">
+    <a class="user-realname" href="user.php?id={{ first_user.user_id }}">{{ first_user.name }}</a>
+    <span class="user-friends ">{{ first_user.friends }}</span>
+    <span class="user-likes">{{ first_user.liked }}</span>
+    <a class="user-email" href="mailto:{{ first_user.email }}"><img src="web-assets/images/mail.png"></a>
+</div>
+<hr>
+<div>
+    <h2>Lots of Users!</h2>
+
+    {% for user in users %}
+        <div class="user">
+            <img class="user-profile-img" src="{{ user.imgUrl}}">
+            <a class="user-realname" href="user.php?id={{ user.user_id }}">{{ user.name }}</a>
+            <span class="user-friends ">{{ user.friends }}</span>
+            <span class="user-likes">{{ user.liked }}</span>
+            <a class="user-email" href="mailto:{{ firsusert_user.email }}"><img src="web-assets/images/mail.png"></a>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

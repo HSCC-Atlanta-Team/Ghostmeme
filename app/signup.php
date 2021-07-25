@@ -133,7 +133,4 @@
 <div class='form-row justify-content-center '>
 <button name="submit" type="submit" class='btn btn-primary col-md-7'> Sign Up </button>
 </div>
-<div class='form-group justify-content-center '>
-        <a href = "<?=$_ENV['BASE_URL']?>/login.php"> Login </a>
-</div>
 

@@ -11,6 +11,7 @@
     use GuzzleHttp\Client;
     use GuzzleHttp\Psr7\Request;
     use App\Database\User;
+    use App\Model\Meme;
     $user = new User();
 
     if(isset($_GET['user'])){
@@ -138,7 +139,7 @@ echo '<div class="form-row justify-content-center">
             <input type="url" name="image" placeholder="Image URL">
             </div>
             <div class="form-row p-1">
-            <input type="text" name="test" placeholder="Description">
+            <input type="text" name="description" placeholder="Description">
         </div>
       </div>
       <div class="modal-footer">
@@ -150,5 +151,30 @@ echo '<div class="form-row justify-content-center">
   </div>
 </div>';
 }
+
+
+    if(isset($_POST['submit'])){
+        if($_POST['image'] == NULL && $_POST['description'] == NULL){
+            $error = "Both Description And Image Can't Be Empty";
+        } else{
+            $body = ['owner' => $_SESSION['user']['owner_id'],
+                    'reciever' => $_GET['user'],
+                    'description' => $_POST['description'],
+                    'private' => true,
+                    'imageUrl' => $_POST['image']];
+
+            //die(var_dump($body));
+
+            $meme = new Meme($body);
+
+            $meme->createMeme();
+
+
+        }
+    }
+
+    if ($error) {
+    echo '<div class="alert alert-danger">' . $error . '</div>';
+    }
 ?>
 <a name="bottomOfPage"></a>

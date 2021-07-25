@@ -110,7 +110,7 @@ require __DIR__ . '/../../init.php';
             $client = new Client(['base_uri' => $_ENV['API_BASE_URL'], 'http_errors' => false]);
             $body = json_encode([
                 "owner" => $this->owner,
-                "reciever" => $this->reciever,
+                "receiver" => $this->reciever,
                 "expiredAt" => $this->expiredAt,
                 "description" => $this->description,
                 "private" => $this->private,
@@ -124,11 +124,11 @@ require __DIR__ . '/../../init.php';
             $status = $response->getStatusCode();
             $body = json_decode($response->getBody(), true);
             if($status == 200){
-                return $true;
+                return $body;
             } elseif($status == 400){
                 return $body;
-            } elseif($status=555){
-                return 'server';
+            } elseif($status == 555){
+                return false;
             }
 
         }

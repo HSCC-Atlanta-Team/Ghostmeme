@@ -1,11 +1,11 @@
 <?php require 'init.php'; ?>
+<?php include_once $_ENV['BASE_DIRECTORY'] . '/web-assets/app_nav/footer.php'; ?>
 <?php $page_title = 'Ghostmeme' ?>
 <?php
-    $pageVariables = [
-        'title' => 'Twig Templates',
-    ];
 
-    echo $twig->render('test.twig', $pageVariables);
+
+echo $twig->render('layouts/basic.layout.twig');
+
 
 $error = NULL;
 if (!isset($_SESSION['user']) && !isset($_COOKIE['user'])) {
@@ -71,16 +71,16 @@ if ($allMemes) {
 ?>
                 <ul id='list'>
     <?php
-                echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
+                echo '<li> <div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
             <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
         <div class="card-body" style="background-color: #b5b5b5">
             <p> Deleted Message</p>
         </div>
         </div>
-        </div>';
+        </div> </li>';
             } else {
-                echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
+                echo '<li> <div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
             <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
         <img class="card-img-top" src="' . $value['imageUrl'] . '" >
@@ -88,21 +88,21 @@ if ($allMemes) {
             <p class="card-text">' . $value['description'] . '</p>
         </div>
         </div>
-        </div>';
+        </div> </li>';
             }
         }
         if ($value['receiver'] == $_GET['user'] && $value['owner'] == $_SESSION['user']['owner_id']) {
             if (0 <= $value['expiredAt']  && $value['expiredAt'] < time()) {
-                echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%" >
+                echo '<li> <div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
             <p style="padding-left: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
         <div class="card-body" style="background-color: #b5b5b5">
             <p> Deleted Message </p>
         </div>
         </div>
-        </div>';
+        </div> </li>';
             } else {
-                echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
+                echo '<li> <div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
             <div style="width: 18rem;">
             <p style="padding-right: 1.5%;"> ' . $_SESSION['user']['username'] . ' </p>
         <img class="card-img-top" src="' . $value['imageUrl'] . '" >
@@ -110,7 +110,7 @@ if ($allMemes) {
             <p class="card-text">' . $value['description'] . '</p>
         </div>
         </div>
-        </div>
+        </div> </li>
         ';
             }
         }
@@ -198,10 +198,7 @@ if ($allMemes) {
                                     alert(data.error);
                                 } else {
                                     $('#list').append($(
-                                        '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">'
-                                        '<div style="width: 18rem;">'
-                                        '<p style="padding-right: 1.5%;">' sessName '</p>'
-                                        '<img class="card-img-top" src=" 'data.user.imageUrl' ">'
+                                        
 
                                     ));
                                 }

@@ -28,4 +28,6 @@ session_start();
 $twig->addGlobal('ENV', $_ENV);
 // add our Dotenv variables to the Twig 'ENV' variable
 $twig->addGlobal('SESSION', $_SESSION);
+
+
 ?>

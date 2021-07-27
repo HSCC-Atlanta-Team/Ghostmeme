@@ -1,6 +1,11 @@
 <?php require 'init.php';?>
 <?php $page_title = 'Login' ?>
 <?php
+    $pageVariables = [
+        'title' => 'Login',
+    ];
+
+    echo $twig->render('layouts/basic.layout.twig', $pageVariables);
 
     if(isset($_SESSION['user']) || isset($_COOKIE['user'])){
         header('Location:' . $_ENV['BASE_URL']);
@@ -64,7 +69,7 @@ if ($positive) {
                          <label class="form-check-label" for="gridCheck">
                              Remember Password
                          </label>
-                         <a class="text-secondary offset-1" href="forgot_password.php"> Forgot Password? </a>
+                         <a class="text-secondary offset-1" href="forgot_password.php"> Forgot? </a>
                      </div>
                  </div>
                  <div class="w-100"></div>

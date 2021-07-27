@@ -198,7 +198,7 @@ if ($allMemes) {
                                     alert(data.error);
                                 } else {
                                     $('#list').append($(
-                                        
+                                        '<li>' + '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">' + '<div style="width: 18rem;">' + '<p style="padding-right: 1.5%;">' + sessName + '</p>' + '<img class="card-img-top" src=" ' + data.user.imageUrl + ' ">'
 
                                     ));
                                 }

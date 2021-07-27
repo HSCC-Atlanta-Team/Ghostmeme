@@ -187,7 +187,7 @@ if ($allMemes) {
 
 
                 <script>
-                    var sessName = <?php echo json_encode($_SESSION['user']['username']) ?>;
+                    var sessName = '<?php echo json_encode($_SESSION['user']['username']) ?>'
 
                     $(document).ready(function() {
                         $('#form').submit(function(event) {

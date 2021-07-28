@@ -4,7 +4,7 @@
 <?php
 
 
-echo $twig->render('layouts/basic.layout.twig');
+echo $twig->render('layouts/user.layout.twig');
 
 
 $error = NULL;
@@ -66,21 +66,21 @@ if ($allMemes) {
         // </div>
         // </div>';
         // }
+        ?>
+        <?php
         if ($value['owner'] == $_GET['user'] && $value['receiver'] == $_SESSION['user']['owner_id']) {
             if (0 <= $value['expiredAt']  && $value['expiredAt'] < time()) {
-?>
-                <ul id='list'>
-    <?php
-                echo '<li> <div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
+
+                echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
             <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
         <div class="card-body" style="background-color: #b5b5b5">
             <p> Deleted Message</p>
         </div>
         </div>
-        </div> </li>';
+        </div>';
             } else {
-                echo '<li> <div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
+                echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
             <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
         <img class="card-img-top" src="' . $value['imageUrl'] . '" >
@@ -88,21 +88,21 @@ if ($allMemes) {
             <p class="card-text">' . $value['description'] . '</p>
         </div>
         </div>
-        </div> </li>';
+        </div>';
             }
         }
         if ($value['receiver'] == $_GET['user'] && $value['owner'] == $_SESSION['user']['owner_id']) {
             if (0 <= $value['expiredAt']  && $value['expiredAt'] < time()) {
-                echo '<li> <div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%" >
+                echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
             <p style="padding-left: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
         <div class="card-body" style="background-color: #b5b5b5">
             <p> Deleted Message </p>
         </div>
         </div>
-        </div> </li>';
+        </div>';
             } else {
-                echo '<li> <div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
+                echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
             <div style="width: 18rem;">
             <p style="padding-right: 1.5%;"> ' . $_SESSION['user']['username'] . ' </p>
         <img class="card-img-top" src="' . $value['imageUrl'] . '" >
@@ -110,14 +110,14 @@ if ($allMemes) {
             <p class="card-text">' . $value['description'] . '</p>
         </div>
         </div>
-        </div> </li>
+        </div> 
         ';
             }
         }
     }
 }
     ?>
-                </ul>
+            
                 <?php
                 //die(var_dump($_ENV['BASE_URL'] . '/users.php?' . $get));
 
@@ -139,7 +139,7 @@ if ($allMemes) {
         </button>
       </div>
       <div class="modal-body">
-        <form id="form" action="" method="post">
+        <form id="message" action="" method="post">
             <div class="form-row p-1" >
             <input type="url" name="image" placeholder="Image URL">
             </div>
@@ -149,7 +149,7 @@ if ($allMemes) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+        <button name="submit" type="submit" id="message" class="btn btn-primary">Submit</button>
         <form>
       </div>
     </div>
@@ -158,25 +158,25 @@ if ($allMemes) {
                 }
 
 
-                if (isset($_POST['submit'])) {
-                    if ($_POST['image'] == NULL && $_POST['description'] == NULL) {
-                        $error = "Both Description And Image Can't Be Empty";
-                    } else {
-                        $body = [
-                            'owner' => $_SESSION['user']['owner_id'],
-                            'reciever' => $_GET['user'],
-                            'description' => $_POST['description'],
-                            'private' => true,
-                            'imageUrl' => $_POST['image']
-                        ];
+                // if (isset($_POST['submit'])) {
+                //     if ($_POST['image'] == NULL && $_POST['description'] == NULL) {
+                //         $error = "Both Description And Image Can't Be Empty";
+                //     } else {
+                //         $body = [
+                //             'owner' => $_SESSION['user']['owner_id'],
+                //             'reciever' => $_GET['user'],
+                //             'description' => $_POST['description'],
+                //             'private' => true,
+                //             'imageUrl' => $_POST['image']
+                //         ];
 
-                        //die(var_dump($body));
+                //         //die(var_dump($body));
 
-                        $meme = new Meme($body);
+                //         $meme = new Meme($body);
 
-                        $meme->createMeme();
-                    }
-                }
+                //         $meme->createMeme();
+                //     }
+                // }
 
                 if ($error) {
                     echo '<div class="alert alert-danger">' . $error . '</div>';
@@ -187,20 +187,23 @@ if ($allMemes) {
 
 
                 <script>
-                    var sessName = '<?php echo json_encode($_SESSION['user']['username']) ?>'
+                    var sessName = <?php echo json_encode($_SESSION['user']['username']) ?>;
+                    var user = <?php echo json_encode($_GET['user']) ?>;
 
                     $(document).ready(function() {
-                        $('#form').submit(function(event) {
+                        $("form").submit(function(event) {
                             event.preventDefault();
-
-                            $.getJson('users.php?action=addMessage&' + $('#form').serialize(), function(data) {
+                            //alert('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize());
+                            $.getJSON('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize(), function(data) {
+                                //alert(data);
                                 if (data.error) {
                                     alert(data.error);
                                 } else {
-                                    $('#list').append($(
+                                    $('list').append($(
                                         '<li>' + '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">' + '<div style="width: 18rem;">' + '<p style="padding-right: 1.5%;">' + sessName + '</p>' + '<img class="card-img-top" src=" ' + data.user.imageUrl + ' ">'
 
                                     ));
+                                    alert(JSON.stringify(data));
                                 }
                             });
                         });

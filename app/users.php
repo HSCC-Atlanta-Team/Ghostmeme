@@ -66,8 +66,7 @@ if ($allMemes) {
         // </div>
         // </div>';
         // }
-        ?>
-        <?php
+
         if ($value['owner'] == $_GET['user'] && $value['receiver'] == $_SESSION['user']['owner_id']) {
             if (0 <= $value['expiredAt']  && $value['expiredAt'] < time()) {
 
@@ -78,17 +77,28 @@ if ($allMemes) {
             <p> Deleted Message</p>
         </div>
         </div>
-        </div>';
+        </div> ';
             } else {
-                echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
-            <div class = "" style="width: 18rem;vertical-align:text-bottom;">
+                if ($value['imageUrl']) {
+                    echo ' <div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
+            <div style="width: 18rem;">
             <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
-        <img class="card-img-top" src="' . $value['imageUrl'] . '" >
+        <img class="card-img-top" alt="Image Failed To Load" src="' . $value['imageUrl'] . '" >
         <div class="card-body" style="background-color: #43CC47">
             <p class="card-text">' . $value['description'] . '</p>
         </div>
         </div>
-        </div>';
+        </div> ';
+                } else {
+                    echo ' <div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
+            <div style="width: 18rem;">
+            <p style="padding-right: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
+        <div class="card-body" style="background-color: #43CC47">
+            <p class="card-text">' . $value['description'] . '</p>
+        </div>
+        </div>
+        </div> ';
+                }
             }
         }
         if ($value['receiver'] == $_GET['user'] && $value['owner'] == $_SESSION['user']['owner_id']) {
@@ -100,29 +110,37 @@ if ($allMemes) {
             <p> Deleted Message </p>
         </div>
         </div>
-        </div>';
+        </div> ';
             } else {
-                echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
+                if ($value['imageUrl']) {
+                    echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
             <div style="width: 18rem;">
             <p style="padding-right: 1.5%;"> ' . $_SESSION['user']['username'] . ' </p>
-        <img class="card-img-top" src="' . $value['imageUrl'] . '" >
+        <img class="card-img-top" alt="Image Failed To Load"src="' . $value['imageUrl'] . '" >
         <div class="card-body" style="background-color: #1982FC">
             <p class="card-text">' . $value['description'] . '</p>
         </div>
         </div>
         </div> 
         ';
+                } else {
+                    echo ' <div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">
+            <div style="width: 18rem;">
+            <p style="padding-right: 1.5%;"> ' . $_SESSION['user']['username'] . ' </p>
+        <div class="card-body" style="background-color: #1982FC">
+            <p class="card-text">' . $value['description'] . '</p>
+        </div>
+        </div>
+        </div> 
+        ';
+                }
             }
         }
     }
 }
-    ?>
-            
-                <?php
-                //die(var_dump($_ENV['BASE_URL'] . '/users.php?' . $get));
 
-                if ($allMemes) {
-                    echo '<div class="form-row justify-content-center">
+if ($allMemes) {
+    echo '<div class="form-row justify-content-center">
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
   Message
 </button>
@@ -155,57 +173,58 @@ if ($allMemes) {
     </div>
   </div>
 </div>';
+}
+
+
+// if (isset($_POST['submit'])) {
+//     if ($_POST['image'] == NULL && $_POST['description'] == NULL) {
+//         $error = "Both Description And Image Can't Be Empty";
+//     } else {
+//         $body = [
+//             'owner' => $_SESSION['user']['owner_id'],
+//             'reciever' => $_GET['user'],
+//             'description' => $_POST['description'],
+//             'private' => true,
+//             'imageUrl' => $_POST['image']
+//         ];
+
+//         //die(var_dump($body));
+
+//         $meme = new Meme($body);
+
+//         $meme->createMeme();
+//     }
+// }
+
+if ($error) {
+    echo '<div class="alert alert-danger">' . $error . '</div>';
+}
+?>
+<a name="bottomOfPage"></a>
+
+
+
+<script>
+    var sessName = <?php echo json_encode($_SESSION['user']['username']) ?>;
+    var user = <?php echo json_encode($_GET['user']) ?>;
+
+    $(document).ready(function() {
+        $("form").submit(function(event) {
+            event.preventDefault();
+            //alert('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize());
+            $.getJSON('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize(), function(data) {
+                //alert(JSON.stringify(data));
+                if (data.error) {
+                    alert(data.error);
+                } else {
+
+                    $('list').append($(
+                        '<li>' + '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">' + '<div style="width: 18rem;">' + '<p style="padding-right: 1.5%;">' + sessName + '</p>' + '<img class="card-img-top" src=" ' + data.meme.imageUrl + ' ">'
+
+                    ));
+                    alert(JSON.stringify(data));
                 }
-
-
-                // if (isset($_POST['submit'])) {
-                //     if ($_POST['image'] == NULL && $_POST['description'] == NULL) {
-                //         $error = "Both Description And Image Can't Be Empty";
-                //     } else {
-                //         $body = [
-                //             'owner' => $_SESSION['user']['owner_id'],
-                //             'reciever' => $_GET['user'],
-                //             'description' => $_POST['description'],
-                //             'private' => true,
-                //             'imageUrl' => $_POST['image']
-                //         ];
-
-                //         //die(var_dump($body));
-
-                //         $meme = new Meme($body);
-
-                //         $meme->createMeme();
-                //     }
-                // }
-
-                if ($error) {
-                    echo '<div class="alert alert-danger">' . $error . '</div>';
-                }
-                ?>
-                <a name="bottomOfPage"></a>
-
-
-
-                <script>
-                    var sessName = <?php echo json_encode($_SESSION['user']['username']) ?>;
-                    var user = <?php echo json_encode($_GET['user']) ?>;
-
-                    $(document).ready(function() {
-                        $("form").submit(function(event) {
-                            event.preventDefault();
-                            //alert('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize());
-                            $.getJSON('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize(), function(data) {
-                                //alert(data);
-                                if (data.error) {
-                                    alert(data.error);
-                                } else {
-                                    $('list').append($(
-                                        '<li>' + '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">' + '<div style="width: 18rem;">' + '<p style="padding-right: 1.5%;">' + sessName + '</p>' + '<img class="card-img-top" src=" ' + data.user.imageUrl + ' ">'
-
-                                    ));
-                                    alert(JSON.stringify(data));
-                                }
-                            });
-                        });
-                    });
-                </script>
+            });
+        });
+    });
+</script>

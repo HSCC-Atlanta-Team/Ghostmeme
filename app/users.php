@@ -68,7 +68,7 @@ if ($allMemes) {
         // }
 
         if ($value['owner'] == $_GET['user'] && $value['receiver'] == $_SESSION['user']['owner_id']) {
-            if (0 <= $value['expiredAt']  && $value['expiredAt'] < time()) {
+            if (0 <= $value['expiredAt']  && $value['expiredAt'] < time() * 1000) {
 
                 echo '<div class="form-row justify-content-start" style="padding-left: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
@@ -102,7 +102,7 @@ if ($allMemes) {
             }
         }
         if ($value['receiver'] == $_GET['user'] && $value['owner'] == $_SESSION['user']['owner_id']) {
-            if (0 <= $value['expiredAt']  && $value['expiredAt'] < time()) {
+            if (0 <= $value['expiredAt']  && $value['expiredAt'] < time() * 1000) {
                 echo '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%" >
             <div class = "" style="width: 18rem;vertical-align:text-bottom;">
             <p style="padding-left: 1.5%;padding-top: 1.5%;"> ' . $user_info['user']['username'] . ' </p>
@@ -138,6 +138,9 @@ if ($allMemes) {
         }
     }
 }
+?>
+<a id="below"></a>
+<?php
 
 if ($allMemes) {
     echo '<div class="form-row justify-content-center">
@@ -196,11 +199,8 @@ if ($allMemes) {
 //     }
 // }
 
-if ($error) {
-    echo '<div class="alert alert-danger">' . $error . '</div>';
-}
 ?>
-<a name="bottomOfPage"></a>
+<a id="bottom" name="bottomOfPage"></a>
 
 
 
@@ -209,22 +209,30 @@ if ($error) {
     var user = <?php echo json_encode($_GET['user']) ?>;
 
     $(document).ready(function() {
-        $("form").submit(function(event) {
+        $("#message").submit(function(event) {
             event.preventDefault();
             //alert('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize());
             $.getJSON('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize(), function(data) {
                 //alert(JSON.stringify(data));
                 if (data.error) {
                     alert(data.error);
-                } else {
-
-                    $('list').append($(
-                        '<li>' + '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">' + '<div style="width: 18rem;">' + '<p style="padding-right: 1.5%;">' + sessName + '</p>' + '<img class="card-img-top" src=" ' + data.meme.imageUrl + ' ">'
+                }
+                elseif(data.meme) {
+                    $('#below').append($(
+                        '<li>' + '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">' +
+                        '<div style="width: 18rem;">' +
+                        '<p style="padding-right: 1.5%;">' +
+                        sessName + '</p>' +
+                        '<img class="card-img-top" src=" ' +
+                        data.meme.imageUrl + ' ">' + '<div class="card-body" style="background-color: #1982FC">' +
+                        '<p class="card-text">' + data.meme.description + '</p>' + '</div>' + '</div>' + '</div>'
 
                     ));
-                    alert(JSON.stringify(data));
+                    $("#exampleModalCenter").modal('hide');
                 }
+                //alert(JSON.stringify(data));
             });
         });
     });
+//});
 </script>

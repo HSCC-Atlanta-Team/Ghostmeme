@@ -18,6 +18,7 @@ function addMessage()
         $error = "Both Description And Image Can't Be Empty";
         die(json_encode(['error' => $error]));
     } else {
+        if($_GET['description']){
         $body = [
             'owner' => $_SESSION['user']['owner_id'],
             'reciever' => $_GET['user'],
@@ -25,6 +26,15 @@ function addMessage()
             'private' => true,
             'imageUrl' => $_GET['image']
         ];
+        } else {
+            $body = [
+                'owner' => $_SESSION['user']['owner_id'],
+                'reciever' => $_GET['user'],
+                'description' => NULL,
+                'private' => true,
+                'imageUrl' => $_GET['image']
+            ];
+        }
 
         //die(json_encode(['user' => $body]));
 

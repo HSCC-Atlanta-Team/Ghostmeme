@@ -1,10 +1,9 @@
 <?php require 'init.php'; ?>
-<?php include_once $_ENV['BASE_DIRECTORY'] . '/web-assets/app_nav/footer.php'; ?>
 <?php $page_title = 'Ghostmeme' ?>
 <?php
 
 
-echo $twig->render('layouts/user.layout.twig');
+echo $twig->render('layouts/basic.layout.twig');
 
 
 $error = NULL;
@@ -35,10 +34,10 @@ if (isset($_GET['user'])) {
         $status = $response->getStatusCode();
 
         if ($status == 200) {
-            $allMemes = json_decode($response->getBody(), true);
+            $allMemes = json_decode($response->getBody()->getContents(), true);
             //die(var_dump($allMemes));
         } elseif ($status == 400) {
-            $error_info = json_decode($response->getBody(), true);
+            $error_info = json_decode($response->getBody()->getContents(), true);
             $error = $error_info['errors'];
         } elseif ($status == 555) {
             $error = 'Something Went Wrong. Please Try Again Later';
@@ -162,16 +161,16 @@ if ($allMemes) {
       <div class="modal-body">
         <form id="message" action="" method="post">
             <div class="form-row p-1" >
-            <input type="url" name="image" placeholder="Image URL">
+                 <input type="url" name="image" placeholder="Image URL">
             </div>
             <div class="form-row p-1">
-            <input type="text" name="description" placeholder="Description">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button name="submit" type="submit" id="message" class="btn btn-primary">Submit</button>
-        <form>
+                 <input type="text" name="description" placeholder="Description">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button name="submit" type="submit" id="message" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
       </div>
     </div>
   </div>
@@ -216,8 +215,7 @@ if ($allMemes) {
                 //alert(JSON.stringify(data));
                 if (data.error) {
                     alert(data.error);
-                }
-                elseif(data.meme) {
+                } else if (data.meme) {
                     $('#below').append($(
                         '<li>' + '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">' +
                         '<div style="width: 18rem;">' +
@@ -228,11 +226,16 @@ if ($allMemes) {
                         '<p class="card-text">' + data.meme.description + '</p>' + '</div>' + '</div>' + '</div>'
 
                     ));
-                    $("#exampleModalCenter").modal('hide');
+
+                    $('#exampleModalCenter').hide();
+                    $('.modal-backdrop').hide();
+
+
+
                 }
                 //alert(JSON.stringify(data));
             });
         });
     });
-//});
+    //});
 </script>

@@ -122,7 +122,7 @@ require __DIR__ . '/../../init.php';
             
             $response = $client->post('/v1/memes', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
             $status = $response->getStatusCode();
-            $body = json_decode($response->getBody(), true);
+            $body = json_decode($response->getBody()->getContents(), true);
             if($status == 200){
                 return $body;
             } elseif($status == 400){

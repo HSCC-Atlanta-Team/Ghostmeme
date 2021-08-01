@@ -2,6 +2,12 @@
 <?php $page_title = 'Ghostmeme' ?>
 <?php
 
+                $pageVariables = [
+                    'title' => 'Twig Templates',
+                ];
+
+                echo $twig->render('test.twig', $pageVariables);
+
     if(!isset($_SESSION['user']) && !isset($_COOKIE['user'])){
         header('Location:' . $_ENV['BASE_URL'] . '/login.php');
     }
@@ -31,7 +37,7 @@ if(isset($user_info)){
     if($user_info['user']['user_id'] !== $_SESSION['user']['owner_id']){   
         if(isset($_SESSION['user'])){
             $chat->createChat($_SESSION['user']['id'], $user_info['user']['user_id'], $user_info['user']['username']);
-        } elseif(issset($_COOKIE['user'])){
+        } elseif(isset($_COOKIE['user'])){
             $chat->createChat($_COOKIE['user']['id'], $user_info['user']['user_id'], $user_info['user']['username']);
         }
         

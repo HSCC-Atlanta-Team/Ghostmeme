@@ -1,11 +1,13 @@
+
+
 <div style="z-index:1000;" class="container col-md-12 p-0 m-0  sticky-top">
     <nav class="navbar navbar-expand-md navbar-light bg-light rounded-bottom">
 
         <!-- <img src="/web-assets/images/BDPA-Flights-Black.jpeg" class="rounded" width="44" height="44" alt="" loading="lazy"> -->
 
-        <a href="#" class="navbar-brand mb-0 h1 ml-3">Ghostmeme</a> <!-- Make name Airlanta -->
+        <a href="index.php" class="navbar-brand mb-0 h1 ml-3">Ghostmeme</a> <!-- Make name Airlanta -->
         <div class="col col-md w-100 justify-content-center">
-            <form method='get' action="/search.php">
+            <form method='get' action="search.php">
                 <input name='search' type='search' placeholder='search'>
                 <button class = 'btn btn-primary'type="submit"> Search </button>
             </form>
@@ -15,8 +17,7 @@
                     <a class="nav-item nav-link" href="login.php">Login</a>
                     <a class="nav-item nav-link" href="signup.php">Signup</a>
                 {% else %}
-
-                    Hello {{ SESSION.user.name }}
+                    <a class="nav-item nav-link" href="logout.php">Logout</a>
                 {% endif %}
             </div>
         </div>

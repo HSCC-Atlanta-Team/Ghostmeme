@@ -1,6 +1,6 @@
 {% extends "layouts/basic.layout.twig" %}
 
-{% block title %}Index{% endblock %}
+{% block title %}{{title}}{% endblock %}
 {% block head %}
     {{ parent() }}
     <style type="text/css">
@@ -8,8 +8,4 @@
     </style>
 {% endblock %}
 {% block content %}
-    <h1>Index</h1>
-    <p class="important">
-        Welcome to my awesome homepage.
-    </p>
 {% endblock %}

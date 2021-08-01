@@ -25,7 +25,8 @@
                             'last_name' => $user['last_name'],
                             'phone' => $user['phone'],
                             'email' => $user['email'], 
-                            'owner_id' => $user['owner_id']],
+                            'owner_id' => $user['owner_id'],
+                            'username' => $user['username']],
                             time()+(10 * 365 * 24 * 60 * 60));
 
                         $_SESSION['user'] = [
@@ -35,6 +36,7 @@
                             'phone' => $user['phone'],
                             'email' => $user['email'],
                             'owner_id' => $user['owner_id'],
+                            'username' => $user['username'],
                         ];
                         return true;
                     }
@@ -46,6 +48,7 @@
                             'phone' => $user['phone'],
                             'email' => $user['email'],
                             'owner_id' => $user['owner_id'],
+                            'username' => $user['username'],
                         ];
                         return true;
                     }  

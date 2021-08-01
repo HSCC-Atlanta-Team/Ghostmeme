@@ -1,11 +1,8 @@
 <?php require 'init.php';?>
 <?php $page_title = 'Login' ?>
 <?php
-    $pageVariables = [
-        'title' => 'Login',
-    ];
 
-    echo $twig->render('layouts/basic.layout.twig', $pageVariables);
+    echo $twig->render('layouts/basic.layout.twig');
 
     if(isset($_SESSION['user']) || isset($_COOKIE['user'])){
         header('Location:' . $_ENV['BASE_URL']);

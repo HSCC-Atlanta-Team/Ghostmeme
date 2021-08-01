@@ -2,11 +2,9 @@
 <?php $page_title = 'Ghostmeme' ?>
 <?php
 
-                $pageVariables = [
-                    'title' => 'Twig Templates',
-                ];
+                
 
-                echo $twig->render('test.twig', $pageVariables);
+    echo $twig->render('test.twig');
 
     if(!isset($_SESSION['user']) && !isset($_COOKIE['user'])){
         header('Location:' . $_ENV['BASE_URL'] . '/login.php');

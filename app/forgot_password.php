@@ -4,6 +4,7 @@
     use App\Database\User;
     $user = new User();
 
+    echo $twig->render('layouts/basic.layout.twig');
     if(isset($_SESSION['user']) || isset($_COOKIE['user'])){
         header('Location:' . $_ENV['BASE_URL']);
     }

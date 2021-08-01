@@ -12,6 +12,7 @@ create table users (
     username varchar(255) not null,
     forgot varchar(20),
     forgot_pass bool,
-    profile_pic_path varchar(255) not null,
+    profile_pic_path varchar(255) null,
+    owner_id varchar(255) not null
     PRIMARY KEY (id)
 );

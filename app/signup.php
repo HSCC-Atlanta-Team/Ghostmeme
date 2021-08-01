@@ -2,7 +2,7 @@
 <?php $page_title = 'Sign Up' ?>
 <?php
     use App\Database\User;
-
+    echo $twig->render('layouts/basic.layout.twig');
 
     if(isset($_SESSION['user']) || isset($_COOKIE['user'])){
         header('Location:' . $_ENV['BASE_URL']);

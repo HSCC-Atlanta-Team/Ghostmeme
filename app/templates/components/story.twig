@@ -1,0 +1,42 @@
+    <div class="container-sm block-width">
+        <div class="card bg-light">
+        {% if meme.imageUrl %}  
+            <div>
+                <img class="card-img-top" src="{{ meme.imageUrl }}">
+            </div>
+        {% endif %}
+            <div class="card-header">
+            
+                <div>
+                    <button class="btn round-button">
+                        <img class="float-left rounded-circle" width="75" height="75" src="{{ meme.owner }}" alt="pfp">
+                    </button>   
+                    <span class="text-right" id="username"><strong>{{ meme.owner }}</strong></span>
+                </div>
+            </div>
+            {% if meme.description %}
+            <div class="card-body"> 
+                <p>{{ meme.description }}</p>
+            </div>
+            {% endif %}
+
+            <div class="card-footer">
+                <div class="float-left">
+                    <a href="#"><button type="button" class="btn"><i class="fas fa-thumbs-up"></i></button></a>
+                    <span id="like-align">{{ meme.likes }}</span>
+                    <a href="#"><button type="button" class="btn share-bookmark"><i class="fas fa-share"></i></button></a>
+                    <a href="#"><button type="button" class="btn share-bookmark"><i class="fas fa-bookmark"></i></button></a>
+                </div>
+                <div class="float-right">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control comment-align" name="comment" placeholder="Tap to write a comment...">
+                            <button type="submit" class="btn btn-align"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>

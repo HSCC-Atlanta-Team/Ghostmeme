@@ -2,7 +2,7 @@
 
 namespace App\Api;
 
-class Meme extends GhostmemeApi 
+class Meme extends GhostmemeApi
 {
     public function getMemes($after = null)
     {
@@ -33,13 +33,12 @@ class Meme extends GhostmemeApi
 
     public function createMeme($owner, $receiver, $expiredAt, $description, $private, $replyTo, $imageUrl, $imageBase64)
     {
-        
+
         $endpoint = sprintf(
-            '%s/v1/memes/%s',
+            '%s/v1/memes',
             $_ENV['API_BASE_URL'],
-            $memeObj
         );
-        $info = {
+        $info = [
             'owner' => $owner,
             'receiver' => $receiver,
             'expiredAt' => $expiredAt,
@@ -47,20 +46,19 @@ class Meme extends GhostmemeApi
             'private' => $private,
             'replyTo' => $replyTo,
             'imageUrl' => $imageUrl,
-            'imageBase64' => $imageBase64, 
-        }
+            'imageBase64' => $imageBase64,
+        ];
 
         $this->setOption('json', $info);
 
         return $this->sendRequest('POST', $endpoint);
     }
 
-    public function getMemes($memeIdArray)
+    public function getMemesById($memeIdArray)
     {
         $url = "";
 
-        for ($memeIdArray as $memeId)
-        {
+        foreach ($memeIdArray as $memeId) {
             $url += $memeId + "/";
         }
 
@@ -72,5 +70,27 @@ class Meme extends GhostmemeApi
         return $this->sendRequest('GET', $endpoint);
     }
 
-    
+    public function searchMemes($search = [], $after = null)
+    {
+        $endpoint = sprintf(
+            '%s/v1/memes/search',
+            $_ENV['API_BASE_URL']
+        );
+
+        $search = json_encode($search);
+        $this->setOption('query', [
+            'match' => $search,
+        ]);
+        //TODO: Clean this up
+        if ($after) {
+            $this->setOption('query', [
+                'match' => $search,
+                'after' => $after,
+            ]);
+            
+        }
+
+
+        return $this->sendRequest('GET', $endpoint);
+    }
 }

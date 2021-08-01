@@ -13,3 +13,24 @@
         {# dump(meme) #} 
     {% endfor %}
 {% endblock %}
+{% block javascript %}
+    <script>
+        $(document).ready(function(){
+            $('.user-id').each(function(index){
+                var id = $(this).data('id');
+
+                $.getJSON(function(data){
+                    var user = data.user;
+
+                    if(!user){
+                        return;
+                    }
+                    var el = $(`<a href="users.php?user=${user.user_id}">${user.name}</a>`);
+                    
+                    $(this).append(el);
+                });
+            });
+        });
+    </script>
+{% endblock %}
+

@@ -9,9 +9,9 @@
             
                 <div>
                     <button class="btn round-button">
-                        <img class="float-left rounded-circle" width="75" height="75" src="{{ meme.owner }}" alt="pfp">
+                        <img class="float-left rounded-circle" width="75" height="75" src="web-assets/images/profile.jpeg" alt="pfp">
                     </button>   
-                    <span class="text-right" id="username"><strong>{{ meme.owner }}</strong></span>
+                    <span class="text-right user-id" data-id="{{ meme.owner }}"></span>
                 </div>
             </div>
             {% if meme.description %}

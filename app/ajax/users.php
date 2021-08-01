@@ -1,12 +1,16 @@
 <?php
 require_once __DIR__ . '/../init.php';
 use App\Model\Meme;
+use App\Api\Users;
 
 header('Content-Type: application/json');
 
 switch ($_GET['action']) {
     case 'addMessage':
         addMessage();
+        break;
+    case 'getUserInfo':
+        getUserInfo();
         break;
 }
 
@@ -50,4 +54,13 @@ function addMessage()
             die(json_encode($response));
         }
     }
+}
+
+function getUserInfo(){
+    $user = new Users();
+    $user_id = $_GET['id'];
+
+    $user_info = $user->getUser($user_id);
+    die(json_decode($user_info->getBody()->getContents()));
+
 }

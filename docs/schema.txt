@@ -1,6 +1,6 @@
-create database ghostmeme;
+create database ghostmeme2;
 
-use ghostmeme;
+use ghostmeme2;
 
 create table users (
     id int(11) not null AUTO_INCREMENT,
@@ -13,6 +13,6 @@ create table users (
     forgot varchar(20),
     forgot_pass bool,
     profile_pic_path varchar(255) null,
-    owner_id varchar(255) not null
+    owner_id varchar(255) not null,
     PRIMARY KEY (id)
 );

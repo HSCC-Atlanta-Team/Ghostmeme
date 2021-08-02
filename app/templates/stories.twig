@@ -13,3 +13,29 @@
         {# dump(meme) #} 
     {% endfor %}
 {% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function(){
+            $('.user-id').each(function(index){
+                var id = $(this).data('id');
+
+                $.getJSON('ajax/users.php?action=getUserInfo&id=' + id, function(data){
+                    var user = data.username;
+                    var target = $('.user-id[data-id="'+id+'"]');
+                    //alert(user);
+                    if(!user){
+                        //alert('test');
+                        target.innerTEXT = 'Loading User ...';
+                        return;
+                    }
+                    var el = $(`<a href="users.php?user=${data.owner_id}">${user}</a>`);
+
+                    target.append(el);
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+

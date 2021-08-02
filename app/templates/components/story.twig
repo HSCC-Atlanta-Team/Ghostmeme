@@ -7,11 +7,13 @@
         {% endif %}
             <div class="card-header">
             
-                <div>
+                <div class="user-profile">
                     <button class="btn round-button">
-                        <img class="float-left rounded-circle" width="75" height="75" src="{{ meme.owner }}" alt="pfp">
+
+                        <img class="float-left rounded-circle" width="50" height="50" src="web-assets/images/profilepic.png" alt="pfp">
                     </button>   
-                    <span class="text-right" id="username"><strong>{{ meme.owner }}</strong></span>
+                    <span class="text-right user-id" data-id="{{ meme.owner }}">Loading User...</span>
+
                 </div>
             </div>
             {% if meme.description %}

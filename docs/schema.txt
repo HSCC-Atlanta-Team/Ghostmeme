@@ -16,3 +16,5 @@ create table users (
     owner_id varchar(255) not null,
     PRIMARY KEY (id)
 );
+
+alter table users add constraint owner_id unique (owner_id);

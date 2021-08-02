@@ -16,7 +16,6 @@
             $answer = $_POST['answer'];
               $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             if ($captcha[$fruit] != $answer) {
-               // ;
                 $error='🧙‍♂️Thou cannot refute that ye failed the riddle of fruits!🧙‍♂️)';
             }
             

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../init.php';
 use App\Model\Meme;
-use App\Api\Users;
+use App\Database\User;
 
 header('Content-Type: application/json');
 
@@ -57,10 +57,10 @@ function addMessage()
 }
 
 function getUserInfo(){
-    $user = new Users();
-    $user_id = $_GET['id'];
+    $user = new User();
 
-    $user_info = $user->getUser($user_id);
-    die(json_decode($user_info->getBody()->getContents()));
+    $user_info = $user->getUserById($_GET['id']);
+
+    die(json_encode($user_info));
 
 }

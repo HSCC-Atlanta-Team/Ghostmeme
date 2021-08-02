@@ -247,5 +247,15 @@
 
 
             }
+
+            public function getUserById($id){
+                $query = $this->db->prepare('SELECT * from users where owner_id=:owner_id');
+
+                $query->execute([':owner_id' => $id,]);
+
+                $users = $query->fetch(PDO::FETCH_ASSOC);
+
+                return $users;
+            }
         }
 ?>

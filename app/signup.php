@@ -12,10 +12,16 @@
     $error = NULL;
 
         if(isset($_POST['submit'])){
+            $fruit = $_POST['captcha'];
+            $answer = $_POST['answer'];
+              $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            if ($captcha[$fruit] != $answer) {
+               // ;
+                $error='🧙‍♂️Thou cannot refute that ye failed the riddle of fruits!🧙‍♂️)';
+            }
+            
 
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-            if($_POST['first_name'] == null){
+            elseif($_POST['first_name'] == null){
                 $error = 'Please Enter Your First Name';
             } 
             elseif($_POST['last_name'] == null){
@@ -62,8 +68,13 @@
                 {
                     $data = preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', '$1-$2-$3', $number). "\n";
                 }
-                $phone = substr($data, 0, -1);
-                $error_report = $user->signup($_POST['first_name'], $_POST['last_name'], $phone, $_POST['email'], $password, $_POST['username'],base64_encode($_POST['propic']));
+		$phone = substr($data, 0, -1);
+
+		if (!$error) {
+			$error_report = $user->signup($_POST['first_name'], $_POST['last_name'], $phone, $_POST['email'], $password, $_POST['username'],base64_encode($_POST['propic']));
+		} else {
+		
+		}
                 if($error_report){
                     $error = $error_report;
                 } else{
@@ -71,6 +82,11 @@
                 }
             }
         }
+?>
+<?php
+
+
+
 ?>
 
 <html>
@@ -130,7 +146,17 @@
        accept="image/png, image/jpeg">
 </div>
 </div>
+
+<?php
+include 'captcha.php';
+?>
+</div>
 <div class='form-row justify-content-center '>
 <button name="submit" type="submit" class='btn btn-primary col-md-7'> Sign Up </button>
 </div>
-
+<script>
+    $('.captcha .grid-item').on('click', function (event) {
+          var filename = $(event.target).attr('data-filename');
+          $('#answer').val(filename);
+    });
+</script>

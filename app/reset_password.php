@@ -1,6 +1,7 @@
 <?php require 'init.php';?>
 <?php $page_title = 'Reset Password' ?>
 <?php
+    echo $twig->render('layouts/basic.layout.twig');
     use App\Database\User;
     $user = new User();
 

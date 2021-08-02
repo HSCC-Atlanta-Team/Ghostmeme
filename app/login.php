@@ -2,6 +2,8 @@
 <?php $page_title = 'Login' ?>
 <?php
 
+    echo $twig->render('layouts/basic.layout.twig');
+
     if(isset($_SESSION['user']) || isset($_COOKIE['user'])){
         header('Location:' . $_ENV['BASE_URL']);
     }
@@ -48,7 +50,7 @@ if ($positive) {
             <div class="row justify-content-center"> <!-- Start Row -->
                 <div class="w-100"></div>
                  <div class="w-100"></div>
-                 <div class="col-md-4 justify-content-centerr">
+                 <div class="col-md-4 justify-content-center">
                      <label for="email">Email or Username</label>
                      <input type="text" class="form-control" id="email" name="email" value="<?=$_POST['email']?>">
                  </div>
@@ -64,7 +66,7 @@ if ($positive) {
                          <label class="form-check-label" for="gridCheck">
                              Remember Password
                          </label>
-                         <a class="text-secondary offset-1" href="forgot_password.php"> Forgot Password? </a>
+                         <a class="text-secondary offset-1" href="forgot_password.php"> Forgot? </a>
                      </div>
                  </div>
                  <div class="w-100"></div>

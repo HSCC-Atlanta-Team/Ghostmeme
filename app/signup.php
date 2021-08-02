@@ -2,7 +2,7 @@
 <?php $page_title = 'Sign Up' ?>
 <?php
     use App\Database\User;
-
+    echo $twig->render('layouts/basic.layout.twig');
 
     if(isset($_SESSION['user']) || isset($_COOKIE['user'])){
         header('Location:' . $_ENV['BASE_URL']);
@@ -132,8 +132,5 @@
 </div>
 <div class='form-row justify-content-center '>
 <button name="submit" type="submit" class='btn btn-primary col-md-7'> Sign Up </button>
-</div>
-<div class='form-group justify-content-center '>
-        <a href = "<?=$_ENV['BASE_URL']?>/login.php"> Login </a>
 </div>
 

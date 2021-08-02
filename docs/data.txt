@@ -1,0 +1,11 @@
+insert into users values (
+null, 
+'Corey', 
+'Johnson', 
+'404-565-1234', 
+'c.johnson@fake-email.com', 
+'$2y$10$Y4Qs57lhZAZ3sz3rqVan3eQtrDudIyuDb/Bu8wdzygR27fPAH2mFe', 
+'cjohnson', 
+null, 
+null, 
+'img/profile/cjohnson.png');

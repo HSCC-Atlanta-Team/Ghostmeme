@@ -1,21 +1,11 @@
-<?php require 'init.php';?>
-<?php $page_title = 'Test' ?>
+
+
 <?php
+use App\Api\Users;
 
-use App\Model\Meme;
+$users = new Users();
 
+//$response = $users->createUser('bob howser', 'bob@test.com', 'bobhows2', '404-555-1212');
+$response = $users->getUser('610335dc55e3bbb0fd5a9580');
+var_dump($response->getBody()->getContents());
 
-$meme_info = [
-    'owner' => '60f203599250410008724135',
-    'reciever' => NULL,
-    'description' => 'this is a test',
-    'imageUrl' => 'https://api.memegen.link/images/buzz/memes/memes_everywhere.png',
-];
-
-
-
-
-
-$meme = new Meme($meme_info);
-
-die(var_dump($meme->createMeme()));

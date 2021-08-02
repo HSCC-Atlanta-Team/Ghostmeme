@@ -8,7 +8,7 @@ $fruit= array_rand($captcha);
 
 echo 'Select the ' . $fruit. ' from the grid:<br>';
 echo '<div class="captcha container">';
-foreach ($captcha as $fruit => $filename) {
+foreach ($captcha as $filename) {
   echo '<div class="grid-item col-lg-3">
             <div>
                 <img src="web-assets/images/captcha/'.$filename.'" data-filename="'.$filename.'"></img>

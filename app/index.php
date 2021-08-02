@@ -50,7 +50,7 @@ if(isset($user_info)){
 ?>
 <div class="container md-4">
          <div class="container bg-light">
-             <?php
+             
 if ($error) {
     echo '<div class="alert alert-danger">' . $error . '</div>';
 }

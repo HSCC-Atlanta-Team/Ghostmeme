@@ -29,5 +29,12 @@ $twig->addGlobal('ENV', $_ENV);
 // add our Dotenv variables to the Twig 'ENV' variable
 $twig->addGlobal('SESSION', $_SESSION);
 
-
+$captcha=['dragonfruit'=>'_9f4h399uytrtyuio98uytr.jpg',
+    'orange'=>'_joi0dbg45owplttu2vbm.png',
+    'pineapple'=>'_39hgwz10mrktkgui.png',
+    'apple'=>'_30htif3biw2bbsjwtfr35weut8fh.png',
+    'grapes'=>'_ke1dnvevtfrdc676dcr7.jpg',
+    'tomato'=>'_8rhwdq0u4039nhfp0t59.png'];
+    
 ?>
+

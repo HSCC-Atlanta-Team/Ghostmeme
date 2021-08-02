@@ -2,7 +2,9 @@
 require 'init.php';
 
 use App\Api\Meme;
-
+if (!isset($_SESSION['user']) && !isset($_COOKIE['user'])) {
+    header('Location:' . $_ENV['BASE_URL'] . '/login.php');
+}
 $pageVariables = [
     'title' => 'Story View',
 ];

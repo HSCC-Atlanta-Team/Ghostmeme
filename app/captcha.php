@@ -19,7 +19,7 @@ echo "</div>";
 
 
 ?>
-<input type="hidden" name="captcha" id="captcha" value="' . $fruit . '">
+<input type="hidden" name="captcha" id="captcha" value="<?php echo $fruit; ?>">
 <input type="hidden" name="answer" id="answer" value="">
 
 

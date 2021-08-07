@@ -196,7 +196,7 @@
 
             public function forgotPassword($email){
 
-                $change_forgot_status_query = $this->db->prepare('UPDATE users SET forgot_pass = 1 WHERE email = :email');
+                $change_forgot_status_query = $this->db->prepare('UPDATE `users` SET `forgot_pass` = 1 WHERE `email` = :email');
                 $change_forgot_status_query->execute([':email' => $email,]);
 
                 $get_user_query = $this->db->prepare('SELECT * from users where email = :email');

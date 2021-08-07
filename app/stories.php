@@ -13,6 +13,8 @@ $meme = new Meme();
 $memes = $meme->searchMemes(['private' => false]); 
 $data = json_decode($memes->getBody()->getContents(), true);
 
+$hidden = $meme->getSomething();
+
 $pageVariables['memes'] = $data['memes'] ??[];
 $pageVariables['nowTime'] = time() * 1000;
 echo $twig->render('stories.twig', $pageVariables);

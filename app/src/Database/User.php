@@ -58,7 +58,7 @@
             }
 
             public function signup($first_name, $last_name, $phone, $email, $password_hash, $username, $imageBase64){
-
+                //$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
                 //die(var_dump($phone));
                 $client = new Client(['base_uri' => $_ENV['API_BASE_URL'], 'http_errors' => false]);
 
@@ -75,7 +75,7 @@
                     'imageBase64' => $imageBase64,
                 ]);
             
-                $response = $client->post('/v1/users', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
+                $response = $client->post('/v1.1/users', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
 
                 $status = $response->getStatusCode();
                 $user_from_api = json_decode($response->getBody(), true);
@@ -90,14 +90,14 @@
                     $signup_query = $this->db->prepare('INSERT INTO `users` (first_name, last_name, phone, email, password_hash, username, forgot, owner_id) VALUES (:first_name, :last_name, :phone, :email, :password_hash, :username, :forgot, :owner_id)');
                     $code = $this->generateForgotPassCode();
                     $signup_query->execute([':first_name' => $first_name, ':last_name' => $last_name, ':phone' => $phone, ':email' => $email, ':password_hash' => $password_hash, ':username' => $username, ':forgot' => $code, 'owner_id' => $user_from_api['user']['user_id']]);
-                    return NULL;
+                    die(var_dump($signup_query->errorInfo())); //return NULL;
                 } elseif($status == 400){
                     $error =  json_decode($response->getBody(), true);
                     return $error['error'];
                 } elseif($status == 555){
                     return 'Something is Wrong With The Server At This Moment. Please Try Again After A Few Minutes';
                 }
-
+                
                 
 
 

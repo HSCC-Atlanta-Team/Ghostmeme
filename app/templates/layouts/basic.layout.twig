@@ -13,8 +13,42 @@
             <link rel="stylesheet" href="web-assets/css/styles.css"/>
         {% endblock %}
     </head>
-    <body class="bg-light">
+    <style>
+        .dark-mode {
+    background-color: #1c1c1c;
+     color: white;
+    }
+    .dark-mode-card {
+    background-color: #525252;
+     color: white;
+    }
+</style>
+    <script>
+function myFunction() {
+   var element = document.body;
+   //var card = document.getElementsByClassName("card");
+   element.classList.toggle("dark-mode");
+   //card.classList.toggle("dark-mode-card");
+
+    if($("div").hasClass("dark-mode")){
+        $("div").removeClass("dark-mode");
+    } else{
+        $("div").addClass("dark-mode");
+    }
+    
+    if($('.card').hasClass('dark-mode-card')){
+        $('.card').removeClass('dark-mode-card');
+    } else {
+        $('.card').addClass('dark-mode-card');
+    }
+   
+}
+</script>
+    
+
+    <body class="">
         {{ include('components/nav.twig') }}
+        <button class="btn btn-primary" onclick="myFunction()">Toggle dark mode</button>
         
         <div id="content" class="container container-fluid">
             {% block content %}

@@ -7,8 +7,10 @@
     echo $twig->render('test.twig');
 
     if(!isset($_SESSION['user']) && !isset($_COOKIE['user'])){
-        header('Location:' . $_ENV['BASE_URL'] . '/login.php');
+        header('Location:' . $_ENV['BASE_URL'] . '/spotlight.php');
+    }else {
+        header('Location: stories.php');
     }
 
-    header('Location: stories.php');
+    #
 

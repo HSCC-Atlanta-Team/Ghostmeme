@@ -12,9 +12,13 @@ switch ($_GET['action']) {
 
 function addMessage()
 {   
+    //die(json_encode(['error' =>$_POST['post']]));
     //echo 'I am in addMessage method';
     //die(json_encode(['success' => true 'owner' => 'test']));
-    if ($_GET['image'] == NULL && $_GET['description'] == NULL) {
+    // if($_GET['image'] !== null && $_POST['post'] !== NULL){
+    //     die(json_encode(['error' => 'You Cant Have Both Image Url and A File']));
+    // }
+    if ($_GET['image'] == NULL && $_GET['description'] == NULL && $_POST == NULL) {
         $error = "Both Description And Image Can't Be Empty";
         die(json_encode(['error' => $error]));
     } else {
@@ -24,7 +28,8 @@ function addMessage()
             'reciever' => $_GET['user'],
             'description' => $_GET['description'],
             'private' => true,
-            'imageUrl' => $_GET['image']
+            'imageUrl' => $_GET['image'],
+            'imageBase64' => $_POST['post'],
         ];
         } else {
             $body = [
@@ -32,9 +37,11 @@ function addMessage()
                 'reciever' => $_GET['user'],
                 'description' => NULL,
                 'private' => true,
-                'imageUrl' => $_GET['image']
+                'imageUrl' => $_GET['image'],
+                'imageBase64' => $_POST['post'],
             ];
         }
+        //die(json_encode(['error' => $_POST['post']]));
 
         //die(json_encode(['user' => $body]));
 

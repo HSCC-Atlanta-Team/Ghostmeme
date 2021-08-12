@@ -159,12 +159,16 @@ if ($allMemes) {
         </button>
       </div>
       <div class="modal-body">
-        <form id="message" action="" method="post">
+        <form id="message" action="" method="post" enctype="multipart/form-data">
             <div class="form-row p-1" >
                  <input type="url" name="image" placeholder="Image URL">
             </div>
             <div class="form-row p-1">
                  <input type="text" name="description" placeholder="Description">
+            </div>
+            <div class="form-row p-1">
+                 <input accept="image/png, image/jpeg" type="file" name="pic" placeholder="Profile Picture" onchange="encodeImgtoBase64(this)">
+                 <a id="content" href=""></a>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -207,14 +211,19 @@ if ($allMemes) {
     var sessName = <?php echo json_encode($_SESSION['user']['username']) ?>;
     var user = <?php echo json_encode($_GET['user']) ?>;
 
+
+
     $(document).ready(function() {
         $("#message").submit(function(event) {
             event.preventDefault();
             //alert('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize());
-            $.getJSON('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize(), function(data) {
+            //alert($("#content").attr('href'));
+            $.post('ajax/users.php?user=' + user + '&action=addMessage&' + $('form').serialize(), {'post' :$("#content").attr('href')}, function(data) {
                 //alert(JSON.stringify(data));
                 if (data.error) {
-                    alert(data.error);
+                    alert(JSON.stringify(data.error));
+                    //alert(data.error);
+                    console.log(JSON.stringify(data.error));
                 } else if (data.meme) {
                     $('#below').append($(
                         '<li>' + '<div class="form-row justify-content-end" style="padding-right: 1.5%; padding-top: 2%">' +
@@ -237,5 +246,18 @@ if ($allMemes) {
             });
         });
     });
+
+    function encodeImgtoBase64(element) {
+
+        var img = element.files[0];
+
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+
+            $("#content").attr("href", reader.result);
+        }
+        reader.readAsDataURL(img);
+    }
     //});
 </script>

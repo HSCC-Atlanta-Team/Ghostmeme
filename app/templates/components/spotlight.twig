@@ -1,0 +1,27 @@
+    <div  class="container-sm block-width">
+        <div class="card {{ mode }}">
+        {% if meme.imageUrl %}  
+            <div>
+                <img class="card-img-top" src="{{ meme.imageUrl }}">
+            </div>
+        {% endif %}
+            <div class="card-header">
+            
+                <div class="user-profile">
+                    <button class="btn round-button">
+
+                        <img class="float-left rounded-circle" width="50" height="50" src="web-assets/images/profilepic.png" alt="pfp">
+                    </button>   
+                    <span class="text-right user-id" data-id="{{ meme.owner }}">Loading User...</span>
+
+                </div>
+            </div>
+            {% if meme.description %}
+            <div class="card-body"> 
+                <p>{{ meme.description }}</p>
+            </div>
+            {% endif %}
+
+            </div>
+        </div>
+    </div>

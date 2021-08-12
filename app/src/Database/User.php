@@ -78,6 +78,7 @@
                 $response = $client->post('/v1/users', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
 
                 $status = $response->getStatusCode();
+                //die(var_dump($status));
                 $user_from_api = json_decode($response->getBody(), true);
                 // /die(var_dump($status));
                 if($status == 200){
@@ -96,6 +97,8 @@
                     return $error['error'];
                 } elseif($status == 555){
                     return 'Something is Wrong With The Server At This Moment. Please Try Again After A Few Minutes';
+                } else{
+                    $error = json_decode($response->getBody(), true);
                 }
                 
                 

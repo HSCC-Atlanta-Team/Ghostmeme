@@ -97,38 +97,52 @@ $modal = false;
         }
 
 if($modal){
-echo'<div class="form-row justify-content-center">
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Password
-</button>
+  // echo'<div class="form-row justify-content-center">
+  // <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  //   Password
+  // </button>
+  // </div>
+
+  // <!-- Modal -->
+  // <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  //   <div class="modal-dialog modal-dialog-centered" role="document">
+  //     <div class="modal-content">
+  //       <div class="modal-header">
+  //         <h5 class="modal-title" id="exampleModalLongTitle">Ghostmeme</h5>
+  //         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  //           <span aria-hidden="true">&times;</span>
+  //         </button>
+  //       </div>
+  //       <div class="modal-body">
+  //         <form id="message" action="" method="post">
+  //             <div class="form-row p-1">
+  //                  <input type="password" name="password" placeholder="password">
+  //             </div>
+  //             <div class="modal-footer">
+  //                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+  //                 <button name="submit" type="submit" id="message" class="btn btn-primary">Submit</button>
+  //             </div>
+  //         </form>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div> 
+
+  // </html>';
+
+  echo '<form action="" method="post">
+            <div class="row justify-content-center"> <!-- Start Row -->
+                <div class="w-100"></div>
+                 <div class="w-100"></div>
+                 <div class="col-md-4 justify-content-center p-3">
+                     <label for="password">Password</label>
+                     <input type="password" placeholder="Enter New Password"class="form-control" id="password" name="password">
+                 </div>
+            </div>
+                <div class="form-row justify-content-center">
+<button name="submit" type="submit" class="btn btn-primary col-md-4"> Submit </button>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Ghostmeme</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="message" action="" method="post">
-            <div class="form-row p-1">
-                 <input type="password" name="password" placeholder="password">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button name="submit" type="submit" id="message" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> 
-
-</html>';
+      ';
 }
 
 

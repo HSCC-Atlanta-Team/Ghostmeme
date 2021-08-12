@@ -18,6 +18,7 @@ require __DIR__ . '/../../init.php';
         private $private = false; //true if this meme is private or false otherwise.
         private $replyTo; //The meme_id of the meme to which this meme is responding or null if it is not a reply.
         private $imageUrl; //The HTTP url of a PNG, JPEG, or GIF image file or null if there is no image.
+        private $imageBase64;
 
 
 
@@ -116,7 +117,7 @@ require __DIR__ . '/../../init.php';
                 "private" => $this->private,
                 "replyTo" => $this->replyTo,
                 "imageUrl" => $this->imageUrl,
-                "imageBase64" => NULL,
+                "imageBase64" => $this->imageBase64,
             ]);
 
             

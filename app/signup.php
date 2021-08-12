@@ -24,9 +24,11 @@ if (isset($_POST['submit'])) {
     $fruit = $_POST['captcha'];
     $answer = $_POST['answer'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    if ($captcha[$fruit] != $answer) {
-        $error='🧙‍♂️Thou cannot refute that ye failed the riddle of fruits!🧙‍♂️)';
-    }
+
+    
+    // if ($captcha[$fruit] != $answer) {
+    //     $error='🧙‍♂️Thou cannot refute that ye failed the riddle of fruits!🧙‍♂️)';
+    // }
 
 
     if ($_POST['first_name'] == null) {

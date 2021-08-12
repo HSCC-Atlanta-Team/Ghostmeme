@@ -142,8 +142,9 @@
 <div class="form-group col-md-4">
 <input type="file"
        id="propic" name="propic"
-       accept="image/png, image/jpeg">
+       accept="image/png, image/jpeg, image/gif">
 </div>
+<input type="hidden" id="base64profile">
 </div>
 
 <?php
@@ -154,6 +155,26 @@ include 'captcha.php';
 <button name="submit" type="submit" class='btn btn-primary col-md-7'> Sign Up </button>
 </div>
 <script>
+    //base64
+    setInterval(function basicsteefor(){
+    if($('#propic')[0].files[0]){
+            $('#base64profile').value=getBase64($('#propic')[0].files[0]);
+        }
+    }
+    ,200)
+
+    function getBase64(file) {
+   var reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+      
+     console.log(reader.result);
+     
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
+}
     $('.captcha .grid-item').on('click', function (event) {
           var filename = $(event.target).attr('data-filename');
           $('#answer').val(filename);

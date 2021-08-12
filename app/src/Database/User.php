@@ -75,7 +75,7 @@
                     'imageBase64' => $imageBase64,
                 ]);
             
-                $response = $client->post('/v1.1/users', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
+                $response = $client->post('/v1/users', ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
 
                 $status = $response->getStatusCode();
                 $user_from_api = json_decode($response->getBody(), true);
@@ -85,12 +85,12 @@
                     //die(var_dump(json_decode($response->getBody(), true)));
                     //die(var_dump($signup_query->errorInfo()));
 
-                    $this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+                    //$this->db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
                     $signup_query = $this->db->prepare('INSERT INTO `users` (first_name, last_name, phone, email, password_hash, username, forgot, owner_id) VALUES (:first_name, :last_name, :phone, :email, :password_hash, :username, :forgot, :owner_id)');
                     $code = $this->generateForgotPassCode();
                     $signup_query->execute([':first_name' => $first_name, ':last_name' => $last_name, ':phone' => $phone, ':email' => $email, ':password_hash' => $password_hash, ':username' => $username, ':forgot' => $code, 'owner_id' => $user_from_api['user']['user_id']]);
-                    die(var_dump($signup_query->errorInfo())); //return NULL;
+                    //die(var_dump($signup_query->errorInfo())); //return NULL;
                 } elseif($status == 400){
                     $error =  json_decode($response->getBody(), true);
                     return $error['error'];

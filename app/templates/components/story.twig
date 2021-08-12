@@ -1,5 +1,5 @@
-    <div class="container-sm block-width">
-        <div class="card bg-light">
+    <div  class="container-sm block-width">
+        <div class="card {{ mode }}">
         {% if meme.imageUrl %}  
             <div>
                 <img class="card-img-top" src="{{ meme.imageUrl }}">
@@ -23,7 +23,7 @@
             {% endif %}
 
             <div class="card-footer">
-                <div class="float-left">
+                <div class="float-left bg-light">
                     <a href="#"><button type="button" class="btn"><i class="fas fa-thumbs-up"></i></button></a>
                     <span id="like-align">{{ meme.likes }}</span>
                     <a href="#"><button type="button" class="btn share-bookmark"><i class="fas fa-share"></i></button></a>

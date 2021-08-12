@@ -89,7 +89,7 @@
 ?>
 
 <html>
-    <div class="jumbotron bg-light">
+    <div class="jumbotron">
     <div class="container mx-auto">
         <h1 class="text-center md-4"> Create an Account </h1>
         <?php
@@ -98,7 +98,7 @@
         }
         ?>
         <form action="signup.php" method="post">
-            <div class="p-3 bg-white rounded shadow-sm border border-top-0 rounded-0">
+            <div class="p-3 rounded shadow-sm border border-top-0 rounded-0">
 
 
 <div class="form-row justify-content-center">

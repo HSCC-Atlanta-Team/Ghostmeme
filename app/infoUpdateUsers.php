@@ -10,18 +10,46 @@ $user = new User();
 if (!isset($_SESSION['user']) && !isset($_COOKIE['user'])) {
     header('Location:' . $_ENV['BASE_URL'] . '/login.php');
 }
+$modal = true;
 
-
+if(isset($_POST['change_submit'])){
+  $error = $user->editUserInfo($_SESSION['user']['owner_id'],$_POST['phone'], $_POST['email'], $_POST['password']);
+}
 
 if (isset($_POST['submit'])) {
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    //$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     if ($_POST["password"] == null) {
-
         $error = "Please Enter a Password";
-
-} elseif(!$user->login($_SESSION['user']['email'], $password, null)) {
-    $error = "Invalid Password";
-}
+    } elseif(!$user->checkUserPassword($_SESSION['user']['owner_id'], $_POST['password'])) {
+        $error = "Invalid Password";
+    } else{
+        echo '
+        <form action="" method="post">
+<div class="form-row justify-content-center">
+        <div class="form-group col-md-4">
+    <label for="phone">Phone Number</label>
+    <input type="text" pattern="[0-9]{10}" oninvalid="setCustomValidity("Please Enter A Valid Phone Number (10 Digits No Hyphen)")" onchange="try{setCustomValidity("")}catch(e){}" class="form-control" id="phone" name="phone" placeholder="123-456-7890"">
+</div>
+</div>
+<div class="form-row justify-content-center">
+<div class="form-group col-md-4">
+        <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Email"">
+</div>
+</div>
+</div>
+        <div  class="form-row justify-content-center">
+        <div class="form-group col-md-4">
+    <label for="password">Password</label>
+    <input type="password" minlength="10"  class="form-control" id="password" name="password" placeholder="Please Enter Your Password"">
+</div>
+</div>
+<div class="form-row justify-content-center ">
+<button name="change_submit" type="submit" class="btn btn-primary col-md-4">Update</button>
+</div>
+</form>';
+$modal = false;
+    }
 
 }
 
@@ -30,17 +58,8 @@ if (isset($_POST['submit'])) {
 <html>
 
 
-<!--<form action="" method="post">
-    <label for="Username">New Username</label>
-    <input type="text" name="Username" placeholder="Username">
-    <label for="Email">New Email</label>
-    <input type="email" name="Email" placeholder="example@example.com">
-    <label for="Phone Number">New Phone Number</label>
-    <input type="tel" name="Phone Number" pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' placeholder="Phone Number">
-    <label for="pwd">Password</label>
-    <input type="password" name="pwd" placeholder=''     
-</form>
--->
+
+
 
 <!-- Button trigger modal 
 
@@ -76,9 +95,9 @@ if (isset($_POST['submit'])) {
         if ($error) {
             echo '<div class="alert alert-danger">'.$error.'</div>';
         }
-        ?>
 
-<div class="form-row justify-content-center">
+if($modal){
+echo'<div class="form-row justify-content-center">
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
   Password
 </button>
@@ -109,8 +128,8 @@ if (isset($_POST['submit'])) {
   </div>
 </div> 
 
-</html>
- 
+</html>';
+}
 
 
     

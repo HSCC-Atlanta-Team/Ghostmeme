@@ -246,6 +246,70 @@
                 }
 
 
+            } public function checkUserPassword($owner_id, $password){
+                $query = $this->db->prepare('SELECT * from users where owner_id = :email');
+                $query->execute([':email' => $owner_id]);
+
+                $user = $query->fetch(PDO::FETCH_ASSOC);
+                //die(var_dump($password));
+                if(password_verify($password, $user['password_hash'])){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+            public function editUserInfo($owner_id,$phone, $email, $password){
+                $client = new Client(['base_uri' => $_ENV['API_BASE_URL'], 'http_errors' => false]);
+
+                $response = $client->get('/v1/users/' . $owner_id, ['headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
+
+                $response_array = json_decode($response->getBody()->getContents(), true);
+
+                if($response_array['error']){
+                    return $response_array['error'];
+                }
+                //die(var_dump($response_array));
+            if($email == null){
+                $email = $response_array['user']['email'];
+            }if($phone==null){
+                $phone = $response_array['user']['phone'];
+            }
+            //die(var_dump($response_array));
+            $body = json_encode([
+                "name"=> $response_array['user']['name'],
+                "email"=> $email,
+                "phone"=> $phone,
+                "imageBase64"=> null
+            ]);
+                $put = $client->put('/v1/users/' . $owner_id, ['body' => $body, 'headers' => ['key' => $_ENV['API_KEY'], 'Content-Type' => 'application/json',]]);
+                $test = json_decode($put->getBody()->getContents(),true);
+                if ($test['error']) {
+                    return $response_array['error'];
+                }
+                if($password){
+                    //die(var_dump($password));
+                    //die(var_dump('test2'));
+                    $password_hash= password_hash($password, PASSWORD_DEFAULT);
+                    $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+                        $query = $this->db->prepare('UPDATE users SET phone=:phone, email=:email, password_hash=:password_hash WHERE owner_id=:owner_id');
+
+                        $query->execute([':phone' => $phone,
+                                        ':email' => $email,
+                                        ':password_hash' => $password_hash,
+                                        ':owner_id' => $owner_id]);
+                        //die(var_dump($query->errorInfo()));
+                }else{
+                    //die(var_dump('test'));
+                    $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+                    $query = $this->db->prepare('UPDATE users SET phone=:phone, email=:email WHERE owner_id=:owner_id');
+
+                    $query->execute([
+                        ':phone' => $phone,
+                        ':email' => $email,
+                        ':owner_id' => $owner_id
+                    ]);
+                    //die(var_dump($query->errorInfo()));
+                }
             }
         }
 ?>
